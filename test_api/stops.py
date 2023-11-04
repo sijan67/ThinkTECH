@@ -1,4 +1,5 @@
 # RTTI - Stops
+# locations where buses provide scheduled service.
 
 import requests
 
@@ -24,9 +25,11 @@ headers = {
 # required parameters in the query string
 params = {
     'apikey': api_key,
-    'stopNo': '12345',  # desired bus stop number
+    'stopNo': '60153',  # desired bus stop number
     'lat': 49.187706,   
-    'long': -122.850060  
+    'long': -122.850060 ,
+    'radius': 100,
+    'routeNo': '' 
 }
 
 
