@@ -1,9 +1,9 @@
 //source: https://javascript.plainenglish.io/bottom-tab-navigation-like-instagram-using-react-native-expo-96dec9279eaa
 
-import React, { Component } from 'react'
+import React, { useState } from 'react';
 import Dashboard from '../screens/DashboardPage/DashboardPage';
 import Map from '../screens/MapPage/MapPage';
-import Welcome from '../screens/WelcomePage/WelcomePage';
+import WelcomeScreen from '../screens/WelcomePage/WelcomePage';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -49,16 +49,27 @@ function Home() {
 }
 
 export default function Navigator() {
-  return (
-  <NavigationContainer>
-    <PaperProvider theme={theme}>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={{
-              headerShown: false, // Hide the title of the Home screen
-            }}/>
-        <Stack.Screen name="Welcome" component={Welcome}/>
-      </Stack.Navigator>
-  </PaperProvider>
-  </NavigationContainer>
-  );
-  }
+    const [showWelcome, setShowWelcome] = useState(true);
+  
+    return (
+      <NavigationContainer>
+        <PaperProvider theme={theme}>
+          <Stack.Navigator>
+            {showWelcome ? (
+              <Stack.Screen
+                name="Welcome"
+                options={{ headerShown: false }} // Hide the title of the Welcome screen
+              >
+                {(props) => <WelcomeScreen {...props} setShowWelcome={setShowWelcome} />}
+              </Stack.Screen>
+            ) : null}
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }} // Hide the title of the Home screen
+            />
+          </Stack.Navigator>
+        </PaperProvider>
+      </NavigationContainer>
+    );
+            }
