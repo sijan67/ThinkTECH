@@ -24,8 +24,6 @@ export default StyleSheet.create({
     padding: 15,
     width: 150,
     position: 'absolute',
-    top: 120,
-    right: -250,
   },
   // Arrow below the bubble
   arrow: {
@@ -34,7 +32,6 @@ export default StyleSheet.create({
     borderTopColor: '#fff',
     borderWidth: 16,
     alignSelf: 'center',
-    marginTop: -32,
   },
   arrowBorder: {
     backgroundColor: 'transparent',
@@ -42,7 +39,7 @@ export default StyleSheet.create({
     borderTopColor: '#007a87',
     borderWidth: 16,
     alignSelf: 'center',
-    marginTop: -0.5,
+    marginTop: 0.5,
     // marginBottom: -15
   },
   // Character name
@@ -53,5 +50,17 @@ export default StyleSheet.create({
   image: {
     width: "100%",
     height: 80,
+  },
+  overlayView: {
+    position: 'absolute',
+    bottom: 600, // Adjust the position as needed
+    left: 150, // Adjust the position as needed
+    backgroundColor: 'red',
+    borderRadius: 5,
+    padding: 8,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

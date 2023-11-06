@@ -47,14 +47,18 @@ const Map = () => {
             image={require('../../assets/map_marker.png')}
             title="Your Location"
             description="You are here"
+            onSelect={() => console.log('onSelect')}
+            // onDrag={() => console.log('onDrag')}
+            onDragStart={() => console.log('onDragStart')}
+            draggable
           />
 
             {/* Show alerts + change location +  ( shelter information / input information + nearby stops ) */}
-            <Callout tooltip>
+            {/* <Callout tooltip>
               <View>
                 <View style={style.bubble}>
                   <Text style={style.name}>Favourite Restaurant</Text>
-                  {/* <Text>A short description</Text> */}
+                  <Text>A short description</Text>
                   <Image 
                     style={style.image}
                     source={require('../../assets/bg.jpg')}
@@ -63,8 +67,25 @@ const Map = () => {
                 <View style={style.arrowBorder} />
                 <View style={style.arrow} />
               </View>
-            </Callout>
-        </MapView>
+            </Callout> */}
+        </MapView> 
+      )}
+      {location && (
+        <View style={style.overlayView}>
+          <View style={style.bubble}>
+          <View style={style.rowContainer}>
+          <View style={style.arrowBorder} />
+            <Text style={style.name}>99 bus</Text>
+            </View>
+            <Text>Short description</Text>
+            <Image
+              style={style.image}
+              source={require('../../assets/bg.jpg')}
+            />
+          </View>
+          
+          {/* <View style={style.arrow} /> */}
+        </View>
       )}
     </View>
   );
