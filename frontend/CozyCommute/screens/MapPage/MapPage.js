@@ -109,7 +109,9 @@ const Map = () => {
           />
         </MapView>
       )}
-      {location && (
+
+      {/* Add description here later */}
+      {/* {location && (
         <View style={style.overlayView}>
           <View style={style.bubble}>
             <View style={style.rowContainer}>
@@ -120,7 +122,7 @@ const Map = () => {
             <Image style={style.image} source={require('../../assets/bg.jpg')} />
           </View>
         </View>
-      )}
+      )} */}
     </View>
   );
   

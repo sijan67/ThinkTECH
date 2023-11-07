@@ -44,11 +44,14 @@ function Dashboard() {
       .then((response) => response.json())
       .then((data) => {
         setResponse(data.nearby_stops);
+
+
       })
       .catch((error) => {
         console.error('Error:', error);
       });
   };
+
 
   return (
     <SafeAreaView style={style.container}>
@@ -73,6 +76,14 @@ function Dashboard() {
               <View style={style.row}>
                 <FontAwesome5 name="map-marker" size={16} color="#333" />
                 <Text style={style.rowText}>Distance: {item.Distance} m</Text>
+              </View>
+              <View style={style.row}>
+                <FontAwesome5 name="clock" size={16} color="#333" />
+                <Text style={style.rowText}>Average Delay: {item.AverageDelay} min</Text>
+              </View>
+              <View style={style.row}>
+                <FontAwesome5 name="home" size={16} color="#333" />
+                <Text style={style.rowText}>Shelter: {item.Shelter ? 'Present' : 'Absent'}</Text>
               </View>
             </View>
           )}
