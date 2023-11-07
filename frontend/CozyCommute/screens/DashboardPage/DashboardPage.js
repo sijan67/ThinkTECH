@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Button, TextInput,FlatList , SafeAreaView, TouchableOpacity} from 'react-native';
 import style from './style';
 import config from '../../config/config';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 function Dashboard() {
   const [response, setResponse] = useState(null);
@@ -45,28 +46,28 @@ function Dashboard() {
 
   return (
     <SafeAreaView style={style.container}>
-  
-      {/* <Button title="Get Data" onPress={handleGetRequest} />
-      <Text>Response from Server:</Text>
-      {response ? (
-        <Text>{JSON.stringify(response)}</Text>
-      ) : (
-        <Text>No response data yet.</Text>
-      )} */}
 
-    {/* <Button title="Get Nearby Stops" onPress={handlePostRequest} /> */}
-    <Text style={style.title}>Response from Server:</Text>
+    <Text style={style.title}> Selected location : </Text>
+    <Text >Response from Server:</Text>
+
       {response ? (
         <FlatList
           data={response}
           keyExtractor={(item) => item.StopNo.toString()}
           renderItem={({ item }) => (
             <View style={style.card}>
-              <Text>Stop Name: {item.Name}</Text>
-              {/* <Text>OnStreet: {item.OnStreet}</Text>
-              <Text>AtStreet: {item.AtStreet}</Text> */}
-              <Text>Wheelchair Access: {item.WheelchairAccess ? 'Yes' : 'No'}</Text>
-              <Text>Distance: {item.Distance} m</Text>
+              <View style={style.row}>
+                <FontAwesome5 name="bus" size={16} color="#333" />
+                <Text style={style.rowText}>{item.Name}</Text>
+              </View>
+              <View style={style.row}>
+                <FontAwesome5 name="wheelchair" size={16} color="#333" />
+                <Text style={style.rowText}>Wheelchair Access: {item.WheelchairAccess ? 'Yes' : 'No'}</Text>
+              </View>
+              <View style={style.row}>
+                <FontAwesome5 name="map-marker" size={16} color="#333" />
+                <Text style={style.rowText}>Distance: {item.Distance} m</Text>
+              </View>
             </View>
           )}
         />

@@ -6,7 +6,7 @@ export default StyleSheet.create({
         flex:1
     },
     card:{
-        backgroundColor: "#FDF3D7",
+        backgroundColor: "#FCD39D",
         marginTop: 10,
         borderRadius: 20,
         padding: 20
@@ -25,6 +25,15 @@ export default StyleSheet.create({
 
     },
     title:{
-        marginTop: 30
+        marginTop: 30,
+        fontSize: 20
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 5,
+    },
+    rowText: {
+        marginLeft: 10
     }
 })
