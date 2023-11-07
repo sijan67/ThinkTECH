@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { NavigationContainer } from '@react-navigation/native';
 import  MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
+import { DraggedLocationProvider } from './DraggedLocationContext';
 
 // source: https://stackoverflow.com/questions/74719540/how-can-i-remove-the-rounded-shape-around-my-selected-tab-text 
 
@@ -54,6 +55,7 @@ export default function Navigator() {
     return (
       <NavigationContainer>
         <PaperProvider theme={theme}>
+        <DraggedLocationProvider>
           <Stack.Navigator>
             {showWelcome ? (
               <Stack.Screen
@@ -69,6 +71,7 @@ export default function Navigator() {
               options={{ headerShown: false }} // Hide the title of the Home screen
             />
           </Stack.Navigator>
+          </DraggedLocationProvider>
         </PaperProvider>
       </NavigationContainer>
     );

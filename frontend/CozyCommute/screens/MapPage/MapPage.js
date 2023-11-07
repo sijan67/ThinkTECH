@@ -5,12 +5,17 @@ import style from './style';
 import * as Location from 'expo-location';
 import config from '../../config/config';
 import Geocoder from 'react-native-geocoding';
+import { useDraggedLocation } from '../../config/DraggedLocationContext';
+
+
 
 const Map = () => {
   const [location, setLocation] = useState(null);
+  const [draggedLocation, setDraggedLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [markerName, setMarkerName] = useState("Your Location"); // Initialize markerName with "Your Location"
   const apiKey = config.googleMapsApiKey;
+  const { updateDraggedLocation, updateMarkerName } = useDraggedLocation();
   Geocoder.init(apiKey);
  
 
@@ -23,6 +28,7 @@ const Map = () => {
         const addressname = address.split(',')[0].trim();
 
         console.log("Location Name:", addressname);
+        updateMarkerName(addressname)
         setMarkerName(addressname);
     } catch (error) {
       console.error("Error getting location name:", error);
@@ -51,13 +57,30 @@ const Map = () => {
     region = JSON.parse(text);
   }
 
-  const onMarkerDragEnd = (e) => {
-    // When the marker is dragged and dropped, update the markerName
-    console.log("dragged, " , e.nativeEvent.coordinate)
-    let latlon = e.nativeEvent.coordinate
-    getLocationName(latlon["latitude"], latlon["longitude"])
+//   const onMarkerDragEnd = (e) => {
+//     // When the marker is dragged and dropped, update the markerName
+//     console.log("dragged, " , e.nativeEvent.coordinate)
+//     let latlon = e.nativeEvent.coordinate
+//     getLocationName(latlon["latitude"], latlon["longitude"])
 
-  };
+//   };
+
+   
+    const onMarkerDragEnd = (e) => {
+    // When the marker is dragged and dropped, update the markerName
+        console.log("dragged, ", e.nativeEvent.coordinate);
+        let latlon = e.nativeEvent.coordinate;
+        setDraggedLocation(latlon);
+        updateDraggedLocation(latlon);
+        getLocationName(latlon["latitude"], latlon["longitude"]);
+    };
+
+    // useEffect(() => {
+    //     // Update the marker's title when markerName changes
+    //     if (location) {
+    //       onMarkerDragEnd({ nativeEvent: { coordinate: { latitude: location.coords.latitude, longitude: location.coords.longitude } } });
+    //     }
+    //   }, [markerName]);
 
   return (
     <View>
@@ -100,6 +123,7 @@ const Map = () => {
       )}
     </View>
   );
+  
 };
 
 export default Map;

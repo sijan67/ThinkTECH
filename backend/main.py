@@ -72,6 +72,7 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 @app.post("/nearby_stops/")
 async def get_nearby_stops(data: dict = Body(...)):
+    print("data is: ", data)
     # Ensure that the request body contains the 'lat' and 'long' fields
     if 'lat' not in data or 'long' not in data:
         raise HTTPException(status_code=400, detail="Invalid JSON data. 'lat' and 'long' fields are required.")
@@ -90,11 +91,12 @@ async def get_nearby_stops(data: dict = Body(...)):
         'apikey': api_key,
         'lat': data['lat'],
         'long': data['long'],
-        'radius': 200,
+        'radius': data['radius'],
         'routeNo': ''
     }
 
     response = requests.get(endpoint_url, headers=headers, params=params)
+    print("response.status_code", response.status_code)
 
     if response.status_code == 200:
         data = response.json()

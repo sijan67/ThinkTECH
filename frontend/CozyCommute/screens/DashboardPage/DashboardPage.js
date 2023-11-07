@@ -3,9 +3,13 @@ import { View, Text, Button, TextInput,FlatList , SafeAreaView, TouchableOpacity
 import style from './style';
 import config from '../../config/config';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useDraggedLocation } from '../../config/DraggedLocationContext';
+import Slider from '@react-native-community/slider';
 
 function Dashboard() {
+  const { draggedLocation, markerName } = useDraggedLocation();
   const [response, setResponse] = useState(null);
+  const [radius, setRadius] = useState(300); // Initial radius value (300 meters)
   const ipAddress = config.ip;
 
   const handleGetRequest = () => {
@@ -31,9 +35,11 @@ function Dashboard() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        lat: 49.268392,
-        long: -123.251804,
+        "lat": parseFloat(draggedLocation["latitude"]),
+        "long": parseFloat(draggedLocation["longitude"]),
+        "radius": radius
       }),
+
     })
       .then((response) => response.json())
       .then((data) => {
@@ -47,8 +53,8 @@ function Dashboard() {
   return (
     <SafeAreaView style={style.container}>
 
-    <Text style={style.title}> Selected location : </Text>
-    <Text >Response from Server:</Text>
+    <Text style={style.title}> Selected location : {markerName} </Text>
+    {/* <Text >Response from Server:</Text> */}
 
       {response ? (
         <FlatList
@@ -72,8 +78,18 @@ function Dashboard() {
           )}
         />
       ) : (
-        <Text>No response data yet.</Text>
+        <Text>No response data </Text>
       )}
+
+<Slider
+        style={{ width: '80%', alignSelf: 'center' }}
+        minimumValue={0}
+        maximumValue={600}
+        step={10}
+        value={radius}
+        onValueChange={(value) => setRadius(value)}
+      />
+      <Text>Radius: {radius} meters</Text>
 
 <TouchableOpacity
         style={style.yellowButton} // Apply the custom yellowButton style
