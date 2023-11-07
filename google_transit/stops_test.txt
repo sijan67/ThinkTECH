@@ -1,0 +1,5 @@
+stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,zone_id,stop_url,location_type,parent_station
+10042,59402,Southbound Smith Ave @ Fir St,,49.244604,-123.019856,BUS ZN,,0,
+10046,59396,Westbound Beach Ave @ Howe St,,49.274962,-123.132056,BUS ZN,,0,
+10047,59393,Westbound Beach Ave @ Hornby St,,49.275543,-123.132974,BUS ZN,,0,
+
