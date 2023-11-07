@@ -15,7 +15,7 @@ api_key = api
 
 from typing import Union
 
-from fastapi import FastAPI, HTTPException, Form
+from fastapi import FastAPI, HTTPException, Form, Body
 
 app = FastAPI()
 
@@ -29,8 +29,53 @@ def read_root():
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
+# @app.post("/nearby_stops/")
+# async def get_nearby_stops(lat: float = Form(...), long: float = Form(...)):
+#     # API endpoint URL
+#     endpoint_url = 'https://api.translink.ca/rttiapi/v1/stops'
+
+#     # Request headers
+#     headers = {
+#         'Accept': 'application/json',
+#         'Authorization': f'Bearer {api_key}'
+#     }
+
+#     # Provide user's lat and long as query parameters
+#     params = {
+#         'apikey': api_key,
+#         'lat': lat,
+#         'long': long,
+#         'radius': 200,
+#         'routeNo': ''
+#     }
+
+#     response = requests.get(endpoint_url, headers=headers, params=params)
+
+#     if response.status_code == 200:
+#         data = response.json()
+#         nearby_stops = []
+
+#         for stop in data:
+#             nearby_stops.append({
+#                 "StopNo": stop['StopNo'],
+#                 "Name": stop['Name'],
+#                 "OnStreet": stop['OnStreet'],
+#                 "AtStreet": stop['AtStreet'],
+#                 "WheelchairAccess": stop['WheelchairAccess'],
+#                 "Distance": stop['Distance']
+#             })
+
+#         return {"nearby_stops": nearby_stops}
+#     else:
+#         raise HTTPException(status_code=response.status_code, detail=f"Request failed with status code {response.status_code}")
+
+
 @app.post("/nearby_stops/")
-async def get_nearby_stops(lat: float = Form(...), long: float = Form(...)):
+async def get_nearby_stops(data: dict = Body(...)):
+    # Ensure that the request body contains the 'lat' and 'long' fields
+    if 'lat' not in data or 'long' not in data:
+        raise HTTPException(status_code=400, detail="Invalid JSON data. 'lat' and 'long' fields are required.")
+
     # API endpoint URL
     endpoint_url = 'https://api.translink.ca/rttiapi/v1/stops'
 
@@ -43,8 +88,8 @@ async def get_nearby_stops(lat: float = Form(...), long: float = Form(...)):
     # Provide user's lat and long as query parameters
     params = {
         'apikey': api_key,
-        'lat': lat,
-        'long': long,
+        'lat': data['lat'],
+        'long': data['long'],
         'radius': 200,
         'routeNo': ''
     }
